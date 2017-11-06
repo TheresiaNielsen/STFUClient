@@ -6,6 +6,7 @@ $(document).ready(() => {
   SDK.Book.findAll ( (err, books) => {
     books.forEach((book) => {
         //demo commit.
+        //demo2
         const bookHtml = `
         <div class="col-lg-4 book-container">
             <div class="panel panel-default">
