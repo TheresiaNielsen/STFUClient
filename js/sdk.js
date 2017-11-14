@@ -114,21 +114,44 @@ const SDK = {
           email: email,
           password: password
         },
-        url: "/users/login?include=user",
+        url: "/login",
         method: "POST"
       }, (err, data) => {
 
         //On login-error
         if (err) return cb(err);
 
-        SDK.Storage.persist("tokenId", data.id);
-        SDK.Storage.persist("userId", data.userId);
-        SDK.Storage.persist("user", data.user);
+        SDK.Storage.persist("crypted", data);
+        //SDK.Storage.persist("userId", data.userId);
+        //SDK.Storage.persist("user", data.user);
 
         cb(null, data);
 
       });
     },
+      create:  (firstname, lastname, email, password, verify, cb) => {
+        SDK.request({
+            data: {
+              firstname: firstname,
+              lastname: lastname,
+              email: email,
+              password: password,
+              verify: verify
+            },
+            url: "/register",
+            method: "POST"
+        },(err, data) => {
+
+          //On create-error
+          if (err) return cb(err);
+
+          SDK.Storage.persist("crypted", data);
+
+          cb(null, data);
+
+        });
+      },
+
     loadNav: (cb) => {
       $("#nav-container").load("nav.html", () => {
         const currentUser = SDK.User.current();

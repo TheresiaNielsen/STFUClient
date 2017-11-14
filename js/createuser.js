@@ -2,28 +2,26 @@ $(document).ready(() => {
 
     SDK.User.loadNav();
 
-    $("#login-button").click(() => {
+    $("#create-button").click(() => {
 
+        const firstname = $("#inputFirstname").val();
+        const lastname = $("#inputLastname").val();
         const email = $("#inputEmail").val();
         const password = $("#inputPassword").val();
+        const verify = $("#inputVerify").val();
 
-        SDK.User.login(email, password, (err, data) => {
+        SDK.User.create(firstname, lastname, email, password, verify, (err, data) => {
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error");
             }
-            else if (err) {
+            else if (err){
                 console.log("Bad stuff happened")
             } else {
                 window.location.href = "index.html";
             }
         });
 
-
     });
 
-    $("#GOTOcreate-button").click(() => {
-        window.location.href = "createuser.html";
-
-    });
 
 });
