@@ -2,17 +2,24 @@ const SDK = {
   serverURL: "http://localhost:8080/api",
   request: (options, cb) => {
 
-    let headers = {};
+   /* let headers = {};
     if (options.headers) {
       Object.keys(options.headers).forEach((h) => {
         headers[h] = (typeof options.headers[h] === 'object') ? JSON.stringify(options.headers[h]) : options.headers[h];
       });
     }
+    Slet???
+    */
+
+   let token = {
+     "authorization":localStorage.getItem("token")
+   }
+
 
     $.ajax({
       url: SDK.serverURL + options.url,
       method: options.method,
-      headers: headers,
+      headers: token,
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify(options.data),
@@ -100,12 +107,14 @@ const SDK = {
       SDK.request({method: "GET", url: "/staffs"}, cb);
     },
     current: () => {
-      return SDK.Storage.load("user");
+      //return SDK.Storage.load("user"); slet?
+        return localStorage.removeItem("token");
     },
     logOut: () => {
-      SDK.Storage.remove("tokenId");
-      SDK.Storage.remove("userId");
-      SDK.Storage.remove("user");
+      //SDK.Storage.remove("tokenId"); slet?
+      //SDK.Storage.remove("userId"); slet?
+      //SDK.Storage.remove("user"); slet?
+      localStorage.removeItem("token"); // token slettes når man logger ud
       window.location.href = "index.html";
     },
     login: (email, password, cb) => {
@@ -121,7 +130,8 @@ const SDK = {
         //On login-error
         if (err) return cb(err);
 
-        SDK.Storage.persist("crypted", data);
+        localStorage.setItem("crypted", data);
+        //SDK.Storage.persist("crypted", data);
         //SDK.Storage.persist("userId", data.userId);
         //SDK.Storage.persist("user", data.user);
 
