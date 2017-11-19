@@ -4,13 +4,13 @@ $(document).ready(() => {
 
     $("#create-button").click(() => {
 
-        const firstname = $("#inputFirstname").val();
-        const lastname = $("#inputLastname").val();
-        const email = $("#inputEmail").val();
-        const password = $("#inputPassword").val();
-        const verify = $("#inputVerify").val();
+        const firstname = $("#inputFirstnameCreate").val();
+        const lastname = $("#inputLastnameCreate").val();
+        const email = $("#inputEmailCreate").val();
+        const password = $("#inputPasswordCreate").val();
+        const verify = $("#inputVerifyCreate").val();
 
-        SDK.User.create(firstname, lastname, email, password, verify, (err, data) => {
+        SDK.User.createUser(firstname, lastname, email, password, verify, (err, data) => {
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error");
             }

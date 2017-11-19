@@ -1,7 +1,8 @@
 $(document).ready(() => {
 // henter aplication så den kun henter ét sted fra
   SDK.User.loadNav();
-  const $bookList = $("#book-list");
+
+    const $bookList = $("#book-list");
 
   SDK.Book.findAll ( (err, books) => {
     books.forEach((book) => {

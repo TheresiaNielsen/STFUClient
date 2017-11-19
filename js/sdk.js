@@ -32,7 +32,7 @@ const SDK = {
     });
 
   },
-  Book: {
+  Event: {
     addToBasket: (book) => {
       let basket = SDK.Storage.load("basket");
 
@@ -108,14 +108,14 @@ const SDK = {
     },
     current: () => {
       //return SDK.Storage.load("user"); slet?
-        return localStorage.removeItem("token");
+        return localStorage.getItem("token");
     },
     logOut: () => {
       //SDK.Storage.remove("tokenId"); slet?
       //SDK.Storage.remove("userId"); slet?
       //SDK.Storage.remove("user"); slet?
       localStorage.removeItem("token"); // token slettes når man logger ud
-      window.location.href = "index.html";
+      window.location.href = "login.html";
     },
     login: (email, password, cb) => {
       SDK.request({
@@ -130,7 +130,7 @@ const SDK = {
         //On login-error
         if (err) return cb(err);
 
-        localStorage.setItem("crypted", data);
+        localStorage.setItem("token", data);
         //SDK.Storage.persist("crypted", data);
         //SDK.Storage.persist("userId", data.userId);
         //SDK.Storage.persist("user", data.user);
@@ -139,7 +139,7 @@ const SDK = {
 
       });
     },
-      create:  (firstname, lastname, email, password, verify, cb) => {
+      createUser:  (firstname, lastname, email, password, verify, cb) => {
         SDK.request({
             data: {
               firstname: firstname,
@@ -155,7 +155,7 @@ const SDK = {
           //On create-error
           if (err) return cb(err);
 
-          SDK.Storage.persist("crypted", data);
+          //SDK.Storage.persist("crypted", data);
 
           cb(null, data);
 
