@@ -1,72 +1,66 @@
 $(document).ready(() => {
-// henter aplication så den kun henter ét sted fra
+
   SDK.User.loadNav();
 
-    const $bookList = $("#book-list");
+    const $eventList = $("#event-list");
 
-  SDK.Book.findAll ( (err, books) => {
-    books.forEach((book) => {
-        //demo commit.
-        //demo2
-        const bookHtml = `
-        <div class="col-lg-4 book-container">
+  SDK.Event.findAll ( (cb, events) => {
+    events = JSON.parse(events);
+    events.forEach((event) => {
+        const eventHtml = `
+        <div class="col-lg-4 event-container">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">${book.title}</h3>
+                    <h3 class="panel-title">${event.eventname}</h3>
                 </div>
-                <div class="panel-body">
-                    <div class="col-lg-4">
-                        <img src="${book.imgUrl}"/>
-                    </div>
                     <div class="col-lg-8">
                       <dl>
-                        <dt>Subtitle</dt>
-                        <dd>${book.subtitle}</dd>
-                        <dt>Publisher</dt>
-                        <dd>${book.publisher}</dd>
-                        <dt>ISBN</dt>
-                        <dd>${book.isbn}</dd>
+                        <dt>Date</dt>
+                        <dd>${event.eventdate}</dd>
+                        <dt>Location</dt>
+                        <dd>${event.location}</dd>
+                        <dt>Description</dt>
+                        <dd>${event.description}</dd>
+                        <dt>Owner</dt>
+                        <dd>${event.owner}</dd>
                       </dl>
                     </div>
                 </div>
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-lg-4 price-label">
-                            <p>Kr. <span class="price-amount">${book.price}</span></p>
+                            <p>Kr. <span class="price-amount">${event.price}</span></p>
                         </div>
-                        <div class="col-lg-8 text-right">
-                            <button class="btn btn-success purchase-button" data-book-id="${book.id}">Add to basket</button>
+                      <button class="col-lg-8 tex-right">
+                      <button class="btn btn-succes attend-button" data-event-id="${event.id}">Attend event</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>`;
 
-        $bookList.append(bookHtml);
+        $eventList.append(eventHtml);
 
     });
 
-      $(".purchase-button").click(function() {
-          $("#purchase-modal").modal("toggle");
-          const bookId = $(this).data("book-id");
-          const book = books.find((book) => book.id === bookId);
-          SDK.Book.addToBasket(book);
+      $(".attend-button").click(function() {
+          const eventId = $(this).data("event-id");
+          const event = events.find((event) => event.id === eventId);
+          window.alert(eventId);
+          SDK.Event.addToAttendingEvents(event);
       });
 
   });
 
-    $("#purchase-modal").on("shown.bs.modal", () => {
-      const basket = SDK.Storage.load("basket");
+    $("#attend-modal").on("shown.es.modal", () => {
+      const egneEvents = SDK.Storage.load("egneEvents");
       const $modalTbody = $("#modal-tbody");
-      basket.forEach((entry) => {
+      egneEvents.forEach((entry) => {
           $modalTbody.append(`
         <tr>
-            <td>
-                <img src="${entry.book.imgUrl}" height="60"/>
-            </td>
-            <td>${entry.book.title}</td>
+            <td>${entry.event.eventname}</td>
             <td>${entry.count}</td>
-            <td>kr. ${entry.book.price}</td>
+            <td>kr. ${entry.event.price}</td>
             <td>kr. 0</td>
         </tr>
       `);

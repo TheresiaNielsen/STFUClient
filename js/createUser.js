@@ -10,6 +10,8 @@ $(document).ready(() => {
         const password = $("#inputPasswordCreate").val();
         const verify = $("#inputVerifyCreate").val();
 
+        console.log('test');
+
         SDK.User.createUser(firstname, lastname, email, password, verify, (err, data) => {
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error");
@@ -17,6 +19,7 @@ $(document).ready(() => {
             else if (err){
                 console.log("Bad stuff happened")
             } else {
+                console.log('test', data);
                 window.location.href = "index.html";
             }
         });

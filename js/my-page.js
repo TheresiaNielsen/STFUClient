@@ -1,8 +1,42 @@
 $(document).ready(() => {
 
   SDK.User.loadNav();
-  const currentUser = SDK.User.current();
-  const $basketTbody = $("#basket-tbody");
+  const $myEventList = $("#created-event-tbody");
+
+  SDK.User.current((error, res) => {
+    var currentStudent =JSON.parse(res);
+    currentID = $("#Welcome").html(`
+          <h1>Hi, ${currentStudent.firstName}</h1>
+          <h1>Your lastname: ${currentStudent.lastName}</h1>
+          <h1>Your email: ${currentStudent.email}</h1>
+          `)
+
+      SDK.Event.findAll((cb, events) => {
+          events = JSON.parse(events);
+          events.forEach((event) => {
+            if (currentStudent.idStudent === event.owner) {
+                let eventHtml =`
+                <tr>
+                    <td>${event.eventDate}</td>
+                    <td>${event.eventLocation}</td>
+                    <td>${event.eventDescription}</td>
+                    <td>${event.eventOwner}</td>
+                    <td><button class="btn-danger">Delete</button></td>
+                </tr>
+                `;
+                $myEventList.append(eventHtml);
+            }
+            
+          });
+      
+      });
+          
+    })
+
+
+  /*  let currentUser = data;
+    console.log(data);
+  });
 
   $(".page-header").html(`
     <h1>Hi, ${currentUser.firstName} ${currentUser.lastName}</h1>
@@ -50,5 +84,5 @@ $(document).ready(() => {
     return total;
   }
 
-
+*/
 });

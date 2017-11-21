@@ -33,7 +33,7 @@ const SDK = {
 
   },
   Event: {
-    addToBasket: (book) => {
+    /*addToBasket: (book) => {
       let basket = SDK.Storage.load("basket");
 
       //Has anything been added to the basket before?
@@ -58,31 +58,45 @@ const SDK = {
 
       SDK.Storage.persist("basket", basket);
     },
-    findAll: (cb) => {
+    */
+    findAll: (cb, event) => {
       SDK.request({
         method: "GET",
-        url: "/books",
+        url: "/events",
         headers: {
           filter: {
-            include: ["authors"]
+            include: ["events"]
           }
         }
       }, cb);
     },
-    create: (data, cb) => {
+    createEvent: (eventname, owner, location, price, eventdate, description, cb) => {
       SDK.request({
-        method: "POST",
-        url: "/books",
-        data: data,
-        headers: {authorization: SDK.Storage.load("tokenId")}
-      }, cb);
-    }
+          eventname: eventname,
+          owner: owner,
+          location: location,
+          price: price,
+          eventdate: eventdate,
+          description: description,
+
+          url: "/events",
+          method: "POST"
+      }, (err, data) => {
+
+          if (err) return cb(err);
+
+          SDK.Storage.persist("crypted", data);
+
+          cb(null,data);
+
+    //headers: {authorization: SDK.Storage.load("tokenId")}
+    //cb);
+
+    });
+
   },
-  Author: {
-    findAll: (cb) => {
-      SDK.request({method: "GET", url: "/authors"}, cb);
-    }
-  },
+},
+
   Order: {
     create: (data, cb) => {
       SDK.request({
@@ -95,7 +109,7 @@ const SDK = {
     findMine: (cb) => {
       SDK.request({
         method: "GET",
-        url: "/orders/" + SDK.User.current().id + "/allorders",
+        //url: "/orders/" + SDK.User.current().id + "/allorders",
         headers: {
           authorization: SDK.Storage.load("tokenId")
         }
@@ -106,9 +120,20 @@ const SDK = {
     findAll: (cb) => {
       SDK.request({method: "GET", url: "/staffs"}, cb);
     },
-    current: () => {
-      //return SDK.Storage.load("user"); slet?
-        return localStorage.getItem("token");
+    current: (cb) => {
+        SDK.request({
+            url: "/students/profile",
+            method: "GET"
+          }, (err, data) => {
+
+            if (err) return cb(err);
+
+
+            cb(null, data);
+
+            }
+
+        )
     },
     logOut: () => {
       //SDK.Storage.remove("tokenId"); slet?
@@ -130,6 +155,7 @@ const SDK = {
         //On login-error
         if (err) return cb(err);
 
+
         localStorage.setItem("token", data);
         //SDK.Storage.persist("crypted", data);
         //SDK.Storage.persist("userId", data.userId);
@@ -142,11 +168,11 @@ const SDK = {
       createUser:  (firstname, lastname, email, password, verify, cb) => {
         SDK.request({
             data: {
-              firstname: firstname,
-              lastname: lastname,
+              firstName: firstname,
+              lastName: lastname,
               email: email,
               password: password,
-              verify: verify
+              verifyPassword: verify
             },
             url: "/register",
             method: "POST"
@@ -164,18 +190,24 @@ const SDK = {
 
     loadNav: (cb) => {
       $("#nav-container").load("nav.html", () => {
-        const currentUser = SDK.User.current();
-        if (currentUser) {
-          $(".navbar-right").html(`
+        let currentUser = null;
+        SDK.User.current((error, data) => {
+          currentUser = data;
+
+            if (currentUser) {
+                $(".navbar-right").html(`
             <li><a href="my-page.html">Your orders</a></li>
             <li><a href="#" id="logout-link">Logout</a></li>
           `);
-        } else {
-          $(".navbar-right").html(`
+            } else {
+                $(".navbar-right").html(`
             <li><a href="login.html">Log-in <span class="sr-only">(current)</span></a></li>
           `);
-        }
-        $("#logout-link").click(() => SDK.User.logOut());
+            }
+            $("#logout-link").click(() => SDK.User.logOut());
+
+        })
+
         cb && cb();
       });
     }
