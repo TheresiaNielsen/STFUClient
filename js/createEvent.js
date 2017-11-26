@@ -2,7 +2,7 @@ $(document).ready(() => {
 
     SDK.User.loadNav();
 
-    $("#create-button").click(() => {
+    $("#create-event-button").click(() => {
 
         const eventname = $("#inputEventnameCreate").val();
         const owner = $("#inputOwnerCreate").val();
@@ -11,14 +11,14 @@ $(document).ready(() => {
         const eventdate = $("#inputEventdateCreate").val();
         const description = $("#inputDescriptionCreate").val();
 
-        SDK.User.createEvent(eventname, owner, location, price, eventdate, description, (err, data) => {
+        SDK.Event.createEvent(eventname, owner, location, price, eventdate, description, (err, data) => {
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error");
             }
             else if (err){
                 console.log("Bad stuff happened")
             } else {
-                window.location.href = "index.html";
+                window.location.href = "event.html";
             }
         });
 

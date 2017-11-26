@@ -1,7 +1,8 @@
 $(document).ready(() => {
 
   SDK.User.loadNav();
-  const $myEventList = $("#created-event-tbody");
+  const $myEventList = $("#create-event-tbody");
+  //const $myAttendingEventList = $("#attend-event-tbody);
 
   SDK.User.current((error, res) => {
     var currentStudent =JSON.parse(res);

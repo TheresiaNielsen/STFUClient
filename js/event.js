@@ -11,12 +11,12 @@ $(document).ready(() => {
         <div class="col-lg-4 event-container">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">${event.eventname}</h3>
+                    <h3 class="panel-title">${event.eventName}</h3>
                 </div>
                     <div class="col-lg-8">
                       <dl>
                         <dt>Date</dt>
-                        <dd>${event.eventdate}</dd>
+                        <dd>${event.eventDate}</dd>
                         <dt>Location</dt>
                         <dd>${event.location}</dd>
                         <dt>Description</dt>
@@ -43,12 +43,35 @@ $(document).ready(() => {
 
     });
 
-      $(".attend-button").click(function() {
+    $(".joinEvent-button").click(function() {
+
+        const idEvent = $(this).data("event-id");
+        const event = event = events.find((event) => event.idEvent === idEvent);
+
+        console.log(event);
+
+        SDK.Event.joinEvent(idEvent, event.eventName, event.eventDate, event.location, event.description, event.owner, event.price, (err, data) => {
+            if (err && err.xhr.status === 401) {
+                $(".form-group").addClass("has-error")
+            }
+            else if (err){
+                console.log("An error happened")
+                window.alert("An error occurred while signing up for the event");
+            } else {
+                window.location.href = "event.html";
+
+            }
+        });
+
+    });
+
+    $(".attend-button").click(function() {
           const eventId = $(this).data("event-id");
           const event = events.find((event) => event.id === eventId);
           window.alert(eventId);
           SDK.Event.addToAttendingEvents(event);
       });
+
 
   });
 
@@ -58,7 +81,7 @@ $(document).ready(() => {
       egneEvents.forEach((entry) => {
           $modalTbody.append(`
         <tr>
-            <td>${entry.event.eventname}</td>
+            <td>${entry.event.eventName}</td>
             <td>${entry.count}</td>
             <td>kr. ${entry.event.price}</td>
             <td>kr. 0</td>

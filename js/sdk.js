@@ -33,32 +33,39 @@ const SDK = {
 
   },
   Event: {
-    /*addToBasket: (book) => {
-      let basket = SDK.Storage.load("basket");
 
-      //Has anything been added to the basket before?
-      if (!basket) {
-        return SDK.Storage.persist("basket", [{
+    addToAttendingEvents: (event) => {
+
+        SDK.request({
+            method: "POST",
+            url: "/events/join"
+        });
+
+      let egneEvents = SDK.Storage.load("egneEvents");
+
+      //Has anything been added to egne events before?
+      if (!egneEvents) {
+        return SDK.Storage.persist("egneEvents", [{
           count: 1,
-          book: book
+          event: event
         }]);
       }
 
-      //Does the book already exist?
-      let foundBook = basket.find(b => b.book.id === book.id);
-      if (foundBook) {
-        let i = basket.indexOf(foundBook);
-        basket[i].count++;
+      //Does the event already exist?
+      let foundEvent = egneEvents.find(e => e.event.id === event.id);
+      if (foundEvent) {
+        let i = egneEvents.indexOf(foundEvent);
+        egneEvents[i].count++;
       } else {
-        basket.push({
+        egneEvents.push({
           count: 1,
-          book: book
+          event: event
         });
       }
 
-      SDK.Storage.persist("basket", basket);
+      SDK.Storage.persist("egneEvents", event);
     },
-    */
+
     findAll: (cb, event) => {
       SDK.request({
         method: "GET",
@@ -72,11 +79,11 @@ const SDK = {
     },
     createEvent: (eventname, owner, location, price, eventdate, description, cb) => {
       SDK.request({
-          eventname: eventname,
+          eventName: eventname,
           owner: owner,
           location: location,
           price: price,
-          eventdate: eventdate,
+          eventDate: eventdate,
           description: description,
 
           url: "/events",
@@ -95,6 +102,27 @@ const SDK = {
     });
 
   },
+
+    joinEvent: (idEvent, eventName, eventDate, location, description, price, cb) => {
+      SDK.request({
+        data: {
+          idEvent: idEvent,
+          eventName: eventName,
+          eventDate: eventDate,
+          location: location,
+          description: description,
+          price: price,
+      },
+      url: "/events/join",
+      method: "POST"
+    }, (err, data) => {
+
+        if (err) return cb(err);
+
+        cb(null, data);
+
+        });
+      },
 },
 
   Order: {
@@ -196,8 +224,7 @@ const SDK = {
 
             if (currentUser) {
                 $(".navbar-right").html(`
-            <li><a href="my-page.html">Your orders</a></li>
-            <li><a href="#" id="logout-link">Logout</a></li>
+            <li><a href="#" id="logout-link">Log-out</a></li>
           `);
             } else {
                 $(".navbar-right").html(`
