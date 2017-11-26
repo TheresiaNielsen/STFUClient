@@ -1,8 +1,9 @@
 $(document).ready(() => {
 
   SDK.User.loadNav();
+
   const $myEventList = $("#create-event-tbody");
-  //const $myAttendingEventList = $("#attend-event-tbody);
+  const $myAttendingList = $("#attend-event-tbody");
 
   SDK.User.current((error, res) => {
     var currentStudent =JSON.parse(res);
@@ -18,21 +19,37 @@ $(document).ready(() => {
             if (currentStudent.idStudent === event.owner) {
                 let eventHtml =`
                 <tr>
+                    <td>${event.eventName}</td>
                     <td>${event.eventDate}</td>
-                    <td>${event.eventLocation}</td>
-                    <td>${event.eventDescription}</td>
-                    <td>${event.eventOwner}</td>
+                    <td>${event.location}</td>
+                    <td>${event.description}</td>
+                    <td>${event.owner}</td>
                     <td><button class="btn-danger">Delete</button></td>
-                </tr>
-                `;
+                </tr>`;
                 $myEventList.append(eventHtml);
             }
             
           });
       
       });
+
+      SDK.Event.findAttendingEvents ((cb, events) => {
+        console.log(events);
+        events = JSON.parse(events);
+        events.forEach((event) => {
+          let eventHtml =`
+          <tr>
+                <td>${event.eventName}</td>
+                <td>${event.eventDate}</td>
+                <td>${event.location}</td>
+                <td>${event.description}</td>
+                <td>${event.owner}</td>
+          </tr>`;
+          $myAttendingList.append(eventHtml);
+        })
+      });
           
-    })
+    });
 
 
   /*  let currentUser = data;

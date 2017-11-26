@@ -43,20 +43,20 @@ $(document).ready(() => {
 
     });
 
-    $(".joinEvent-button").click(function() {
+    $(".attendEvent-button").click(function() {
 
         const idEvent = $(this).data("event-id");
         const event = event = events.find((event) => event.idEvent === idEvent);
 
         console.log(event);
 
-        SDK.Event.joinEvent(idEvent, event.eventName, event.eventDate, event.location, event.description, event.owner, event.price, (err, data) => {
+        SDK.Event.attendEvent(idEvent, event.eventName, event.eventDate, event.location, event.description, event.owner, event.price, (err, data) => {
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error")
             }
             else if (err){
                 console.log("An error happened")
-                window.alert("An error occurred while signing up for the event");
+                window.alert("An error occurred while signing up for the event - try again");
             } else {
                 window.location.href = "event.html";
 
@@ -65,13 +65,13 @@ $(document).ready(() => {
 
     });
 
-    $(".attend-button").click(function() {
+   /* $(".attendEvent-button").click(function() {
           const eventId = $(this).data("event-id");
           const event = events.find((event) => event.id === eventId);
           window.alert(eventId);
           SDK.Event.addToAttendingEvents(event);
       });
-
+*/
 
   });
 

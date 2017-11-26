@@ -77,6 +77,19 @@ const SDK = {
         }
       }, cb);
     },
+
+    findAttendingEvents: (cb, event) => {
+      SDK.request ({
+          method: "GET",
+          url: "/students/" + localStorage.getItem("idStudent") +"/events",
+          headers: {
+            filter: {
+              include: ["events"]
+            }
+          }
+      }, cb);
+
+    },
     createEvent: (eventname, owner, location, price, eventdate, description, cb) => {
       SDK.request({
           eventName: eventname,
@@ -103,7 +116,7 @@ const SDK = {
 
   },
 
-    joinEvent: (idEvent, eventName, eventDate, location, description, price, cb) => {
+    attendEvent: (idEvent, eventName, eventDate, location, description, price, cb) => {
       SDK.request({
         data: {
           idEvent: idEvent,
@@ -113,8 +126,9 @@ const SDK = {
           description: description,
           price: price,
       },
-      url: "/events/join",
-      method: "POST"
+        url: "/events/join",
+        method: "POST"
+
     }, (err, data) => {
 
         if (err) return cb(err);
@@ -168,7 +182,7 @@ const SDK = {
       //SDK.Storage.remove("userId"); slet?
       //SDK.Storage.remove("user"); slet?
       localStorage.removeItem("token"); // token slettes når man logger ud
-      window.location.href = "login.html";
+      window.location.href = "index.html";
     },
     login: (email, password, cb) => {
       SDK.request({
