@@ -156,6 +156,8 @@ const SDK = {
 
                     if (err) return cb(err);
 
+                    localStorage.setItem("idStudent", JSON.parse(data).idStudent);
+
 
                     cb(null, data);
 
