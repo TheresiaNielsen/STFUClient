@@ -32,7 +32,7 @@ $(document).ready(() => {
                             <p>Kr. <span class="price-amount">${event.price}</span></p>
                         </div>
                       <button class="col-lg-8 tex-right">
-                      <button class="btn btn-succes attend-button" data-event-id="${event.id}">Attend event</button>
+                      <button class="btn btn-succes attendEvent-button" data-event-id="${event.idEvent}">Attend event</button>
                         </div>
                     </div>
                 </div>
@@ -46,11 +46,11 @@ $(document).ready(() => {
     $(".attendEvent-button").click(function() {
 
         const idEvent = $(this).data("event-id");
-        const event = event = events.find((event) => event.idEvent === idEvent);
+        const event = events.find((event) => event.idEvent === idEvent);
 
         console.log(event);
 
-        SDK.Event.attendEvent(idEvent, event.eventName, event.eventDate, event.location, event.description, event.owner, event.price, (err, data) => {
+        SDK.Event.attendEvent(idEvent, event.eventName, event.eventDate, event.location, event.description, event.price, (err, data) => {
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error")
             }

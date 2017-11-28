@@ -33,8 +33,7 @@ $(document).ready(() => {
       
       });
 
-      SDK.Event.findAttendingEvents ((cb, events) => {
-        console.log(events);
+      SDK.User.findAttendingEvents ((cb, events) => {
         events = JSON.parse(events);
         events.forEach((event) => {
           let eventHtml =`
