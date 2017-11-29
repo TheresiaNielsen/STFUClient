@@ -123,9 +123,27 @@ const SDK = {
 
             });
         },
+
+        deleteMyEvent: (idEvent, eventName, eventDate, location, description, price, cb) => {
+            SDK.request({
+                data: {
+                    idEvent: idEvent,
+                    eventName: eventName,
+                    eventDate: eventDate,
+                    location: location,
+                    description: description,
+                    price: price,
+                },
+                method: "PUT",
+                url: "/events/" + idEvent + "/delete-event"
+
+            }, cb);
+        },
     },
 
-    Order: {
+
+
+    /*Order: {
         create: (data, cb) => {
             SDK.request({
                 method: "POST",
@@ -143,7 +161,7 @@ const SDK = {
                 }
             }, cb);
         }
-    },
+    },*/
     User: {
         findAll: (cb) => {
             SDK.request({method: "GET", url: "/staffs"}, cb);

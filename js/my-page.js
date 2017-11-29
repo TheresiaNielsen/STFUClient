@@ -24,7 +24,7 @@ $(document).ready(() => {
                     <td>${event.location}</td>
                     <td>${event.description}</td>
                     <td>${event.owner}</td>
-                    <td><button class="btn-danger">Delete</button></td>
+                    <td><button class="btn-danger deleteMyEvent" data-delete-my-event-id=${event.idEvent}>Delete your event</button></td>
                 </tr>`;
                 $myEventList.append(eventHtml);
             }
@@ -46,6 +46,28 @@ $(document).ready(() => {
           </tr>`;
           $myAttendingList.append(eventHtml);
         })
+      });
+
+      $(".deleteMyEvent-button").click(function() {
+
+          const idEvent = $(this).data("delete-my-event-id");
+          const event = events.find((event) => event.idEvent === idEvent);
+
+          console.log(event);
+
+          SDK.Event.deleteMyEvent(idEvent, event.eventName, event.eventDate, event.location, event.description, event.price, (err, data) => {
+              if (err && err.xhr.status === 401) {
+                  $(".form-group").addClass("has-error")
+              }
+              else if (err){
+                  console.log("An error happened")
+                  window.alert("An error occurred while deleting the event - please try again");
+              } else {
+                  window.location.href = "index.html";
+
+              }
+          })
+
       });
           
     });

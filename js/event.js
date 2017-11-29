@@ -65,6 +65,31 @@ $(document).ready(() => {
 
     });
 
+    $("findAttendingStudents-button").click(function() {
+
+        var idEvent = $(this).data(students - attending - id)
+
+
+        SDK.Event.findAttendingStudents(idEvent, (cb, students) => {
+            if (students) {
+                students = JSON.parse(students);
+                students = forEach((student) => {
+                    const attendingHtml =`
+                <tr>
+                    < td >${student.firstName} < /td>
+                    < td >${student.lastName} < /td>
+                    < td >${student.email} < /td>
+                    < /tr> `;
+                    $allAttendingStudents.append(attendingHtml)
+                });
+            } else {
+                window.alert("There is no students attending!")
+            }
+        });
+
+});
+
+
    /* $(".attendEvent-button").click(function() {
           const eventId = $(this).data("event-id");
           const event = events.find((event) => event.id === eventId);
