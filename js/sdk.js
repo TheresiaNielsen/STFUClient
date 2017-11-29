@@ -139,6 +139,14 @@ const SDK = {
 
             }, cb);
         },
+
+        findAttendingStudents: (idEvent, cb) => {
+            SDK.request({
+                method: "GET",
+                url: "/events/" + idEvent + "/students"
+
+            }, cb);
+        },
     },
 
 

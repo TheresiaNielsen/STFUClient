@@ -3,6 +3,7 @@ $(document).ready(() => {
   SDK.User.loadNav();
 
     const $eventList = $("#event-list");
+    const $AllAttendingStudents = $("#all-attending-students");
 
   SDK.Event.findAll ( (cb, events) => {
     events = JSON.parse(events);
@@ -67,7 +68,7 @@ $(document).ready(() => {
 
     $("findAttendingStudents-button").click(function() {
 
-        var idEvent = $(this).data(students - attending - id)
+        var idEvent = $(this).data("attend-event-id")
 
 
         SDK.Event.findAttendingStudents(idEvent, (cb, students) => {
@@ -85,6 +86,11 @@ $(document).ready(() => {
             } else {
                 window.alert("There is no students attending!")
             }
+        });
+
+        $("#close").click(function () {
+            $("#all-attending-students").html("");
+
         });
 
 });
