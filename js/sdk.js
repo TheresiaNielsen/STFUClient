@@ -135,8 +135,23 @@ const SDK = {
                     price: price,
                 },
                 method: "PUT",
-                url: "/events/" + idEvent + "/delete-event"
+                url: "/events/" + idEvent + "/delete-event",
 
+            }, cb);
+        },
+
+        updateMyEvent: (idEvent, eventName, eventDate, location, description, price, cb) => {
+            SDK.request ({
+                data: {
+                    idEvent: idEvent,
+                    eventName: eventName,
+                    eventDate: eventDate,
+                    location: location,
+                    description: description,
+                    price: price,
+                },
+                method: "PUT",
+                url: "/events/" + idEvent + "/update-event"
             }, cb);
         },
 
@@ -144,9 +159,8 @@ const SDK = {
             SDK.request({
                 method: "GET",
                 url: "/events/" + idEvent + "/students"
-
             }, cb);
-        },
+        }
     },
 
 

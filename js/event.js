@@ -34,7 +34,7 @@ $(document).ready(() => {
                         </div>
                       <button class="col-lg-8 tex-right">
                       <button class="btn btn-succes attendEvent-button" data-event-id="${event.idEvent}">Attend event</button>
-                      <button class="btn findAttendingStudents-button" data-toogle="modal" data-target="#AllAttendingStudents "data-attend-event-id="${event.idEvent}">See all Attending students</button>       
+                      <button class="btn findAttendingStudents-button" data-toogle="modal" data-target="#AllAttendingStudents "data-attend-event-id="${event.idEvent}">See all attending students</button>       
                         </div>
                     </div>
                 </div>
@@ -67,9 +67,9 @@ $(document).ready(() => {
 
     });
 
-    $("findAttendingStudents-button").click(function() {
+    $(".findAttendingStudents-button").click(function() {
 
-        var idEvent = $(this).data("attend-event-id")
+        var idEvent = $(this).data("attend-event-id");
 
 
         SDK.Event.findAttendingStudents(idEvent, (cb, students) => {
