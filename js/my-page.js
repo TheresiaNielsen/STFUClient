@@ -6,7 +6,9 @@ $(document).ready(() => {
   const $myAttendingList = $("#attend-event-tbody");
 
   SDK.User.current((error, res) => {
+
     var currentStudent =JSON.parse(res);
+
     currentID = $("#Welcome").html(`
           <h1>Hi, ${currentStudent.firstName}</h1>
           <h1>Your lastname: ${currentStudent.lastName}</h1>
@@ -65,10 +67,11 @@ $(document).ready(() => {
                   const location = $("#inputLocationUpdate").val();
                   const description = $("#inputDescriptionUpdate").val();
                   const price = $("#inputPriceUpdate").val();
+                  //const idEvent = SDK.URL.getParameterByName("eventId")
 
                   console.log(eventName);
 
-                  SDK.updateMyEvent(idEvent, eventName, eventDate, location, description, price, (err, data) => {
+                  SDK.Event.updateMyEvent(idEvent, eventName, eventDate, location, description, price, (err, data) => {
                       if (err & err.xhr.status === 401) {
                           $(".form-group").addClass("has-error")
                       }

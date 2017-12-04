@@ -25,6 +25,8 @@
 
             <div id="egneEvents"></div>
 
+
+            <!-- Modal for findAttendingEvents-->
             <div class="page-header" align="center">
                 <h1>My attending events</h1>
         </div>
@@ -43,7 +45,7 @@
         </table>
 
 
-
+            <!-- Modal for findAll-->
         <div class="page-header" align="center">
             <h1>My created events</h1>
          </div>
@@ -55,6 +57,8 @@
                 <th>Location</th>
                 <th>Description</th>
                 <th>Owner</th>
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody id="create-event-tbody">
@@ -65,46 +69,48 @@
 </div>
 </div>
 
-</div>
 
-<!-- Modal for updateMyEvent-->
-<div id="updateMyEventModal" class="modal fade" role="dialog" >
-    <div class="modal-dialog">
 
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><b>Update your event</b></h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="control-label" for="inputEventNameUpdate">Event Name</label>
-                    <input type="text" class="form-control" id="inputEventNameUpdate" placeholder="Add a new name for your event">
+    <!-- Modal for updateMyEvent-->
+    <div id="updateMyEventModal" class="modal fade" role="dialog" >
+        <div class="modal-dialog">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><b>Update your event</b></h4>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="inputEventDateUpdate">Event Date</label>
-                    <input type="text" class="form-control" id="inputEventDateUpdate" placeholder="Add a new date for your event">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label" for="inputEventNameUpdate">Event Name</label>
+                        <input type="text" class="form-control" id="inputEventNameUpdate" placeholder="Add a new name for your event">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputEventDateUpdate">Event Date</label>
+                        <input type="text" class="form-control" id="inputEventDateUpdate" placeholder="Add a new date for your event">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputLocationUpdate">Location</label>
+                        <input type="text" class="form-control" id="inputLocationUpdate" placeholder="Add a new location for your event">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputDescriptionUpdate">Description</label>
+                        <input type="text" class="form-control" id="inputDescriptionUpdate" placeholder="Add a new description for your event">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputPriceUpdate">Price</label>
+                        <input type="text" class="form-control" id="inputPriceUpdate" placeholder="Add a new price for your event">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="inputLocationUpdate">Location</label>
-                    <input type="text" class="form-control" id="inputLocationUpdate" placeholder="Add a new location for your event">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" id="submitMyUpdatedEventButton">Update your event</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="inputDescriptionUpdate">Description</label>
-                    <input type="text" class="form-control" id="inputDescriptionUpdate" placeholder="Add a new description for your event">
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="inputPriceUpdate">Price</label>
-                    <input type="text" class="form-control" id="inputPriceUpdate" placeholder="Add a new price for your event">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info" id="submitMyUpdatedEventButton">Update your event</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+
 </div>
 
 
