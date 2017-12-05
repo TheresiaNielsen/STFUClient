@@ -33,7 +33,7 @@ $(document).ready(() => {
                             <p>Kr. <span class="price-amount">${event.price}</span></p>
                         </div>
                       <button class="col-lg-8 tex-right">
-                      <button class="btn btn-succes attendEvent-button" data-event-id="${event.idEvent}">Attend event</button>
+                      <button class="btn btn-outline-success attendEvent-button" data-event-id="${event.idEvent}">Attend event</button>
                       <button class="btn findAttendingStudents-button" data-toogle="modal" data-target="#AllAttendingStudents "data-attend-event-id="${event.idEvent}">See all attending students</button>       
                         </div>
                     </div>
@@ -60,7 +60,7 @@ $(document).ready(() => {
                 console.log("An error happened")
                 window.alert("An error occurred while signing up for the event - try again");
             } else {
-                window.location.href = "event.html";
+                window.location.href = "my-page.html";
 
             }
         })
@@ -71,6 +71,7 @@ $(document).ready(() => {
 
         var idEvent = $(this).data("attend-event-id");
 
+        console.log(idEvent);
 
         SDK.Event.findAttendingStudents(idEvent, (cb, students) => {
             if (students) {

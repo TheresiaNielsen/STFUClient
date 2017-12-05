@@ -26,7 +26,7 @@ $(document).ready(() => {
                     <td>${event.location}</td>
                     <td>${event.description}</td>
                     <td>${event.owner}</td>
-                    <td><button class="btn-primary updateMyEvent-button" data-toogle="modal" data-target="#updateMyEventModal" data-update-my-event-id="${event.idEvent}">Update your Event</button></td>
+                    <td><button class="btn-info updateMyEvent-button" data-toogle="modal" data-target="#updateMyEventModal" data-update-my-event-id="${event.idEvent}">Update your Event</button></td>
                     <td><button class="btn-danger deleteMyEvent-button" data-delete-my-event-id=${event.idEvent}>Delete your event</button></td>
                 </tr>`;
                 $myEventList.append(eventHtml);
@@ -48,7 +48,7 @@ $(document).ready(() => {
                       console.log("An error happened")
                       window.alert("An error occurred while deleting the event - please try again");
                   } else {
-                      window.location.href = "index.html";
+                      window.location.href = "my-page.html";
 
                   }
               })
@@ -59,7 +59,7 @@ $(document).ready(() => {
 
               const idEvent = $(this).data("update-my-event-id");
 
-              console.log(idEvent);
+            $("#updateMyEventModal").modal("toggle");
 
               $("#submitMyUpdatedEventButton").click(() => {
                   const eventName = $("#inputEventNameUpdate").val();
@@ -67,21 +67,15 @@ $(document).ready(() => {
                   const location = $("#inputLocationUpdate").val();
                   const description = $("#inputDescriptionUpdate").val();
                   const price = $("#inputPriceUpdate").val();
-                  //const idEvent = SDK.URL.getParameterByName("eventId")
 
                   console.log(eventName);
 
                   SDK.Event.updateMyEvent(idEvent, eventName, eventDate, location, description, price, (err, data) => {
-                      if (err & err.xhr.status === 401) {
-                          $(".form-group").addClass("has-error")
-                      }
-                      else if (err){
-                          console.log("An error happened")
-                          window.alert("An error occurred while update the event - please try again");
-                      } else {
+
                           window.location.href = "my-page.html";
-                      }
-                  })
+
+                  });
+
               });
           });
 
