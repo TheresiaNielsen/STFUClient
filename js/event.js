@@ -34,7 +34,7 @@ $(document).ready(() => {
                         </div>
                       <button class="col-lg-8 tex-right">
                       <button class="btn btn-outline-success attendEvent-button" data-event-id="${event.idEvent}">Attend event</button>
-                      <button class="btn findAttendingStudents-button" data-toogle="modal" data-target="#AllAttendingStudents "data-attend-event-id="${event.idEvent}">See all attending students</button>       
+                      <button class="btn findAttendingStudents-button"  data-attend-event-id="${event.idEvent}">See all attending students</button>       
                         </div>
                     </div>
                 </div>
@@ -69,20 +69,25 @@ $(document).ready(() => {
 
     $(".findAttendingStudents-button").click(function() {
 
+
         var idEvent = $(this).data("attend-event-id");
 
-        console.log(idEvent);
+        $("#AllAttendingStudents-button").modal("toggle");
+
+        //console.log(idEvent);
 
         SDK.Event.findAttendingStudents(idEvent, (cb, students) => {
+            console.log(students);
             if (students) {
                 students = JSON.parse(students);
+
                 students.forEach((student) => {
                     const attendingHtml = `
                 <tr>
-                    < td >${student.firstName} < /td>
-                    < td >${student.lastName} < /td>
-                    < td >${student.email} < /td>
-                    < /tr> `;
+                    <td> ${student.firstName} </td>
+                    <td> ${student.lastName} </td>
+                    <td> ${student.email} </td>
+                    </tr> `;
                     $AllAttendingStudents.append(attendingHtml)
                 });
             } else {
