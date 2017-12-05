@@ -80,14 +80,15 @@ $(document).ready(() => {
             console.log(students);
             if (students) {
                 students = JSON.parse(students);
-
                 students.forEach((student) => {
+
                     const attendingHtml = `
                 <tr>
                     <td> ${student.firstName} </td>
                     <td> ${student.lastName} </td>
                     <td> ${student.email} </td>
                     </tr> `;
+
                     $AllAttendingStudents.append(attendingHtml)
                 });
             } else {
@@ -98,22 +99,21 @@ $(document).ready(() => {
 
     });
 
-    $("#close").click(function () {
-          $("#AllAttendingStudents").html("");
-      });
-
-
-   /* $(".attendEvent-button").click(function() {
-          const eventId = $(this).data("event-id");
-          const event = events.find((event) => event.id === eventId);
-          window.alert(eventId);
-          SDK.Event.addToAttendingEvents(event);
-      });
-*/
-
   });
 
-    $("#attend-modal").on("shown.es.modal", () => {
+    $("#close").click(function () {
+
+
+$("#AllAttendingStudents-button").modal("toggle");
+    });
+
+
+    $("#AllAttendingStudents-button").on("hidden.bs.modal", function() {
+
+        $("#all-attending-students").html("");
+    });
+
+    /*$("#attend-modal").on("shown.es.modal", () => {
       const egneEvents = SDK.Storage.load("egneEvents");
       const $modalTbody = $("#modal-tbody");
       egneEvents.forEach((entry) => {
@@ -127,5 +127,6 @@ $(document).ready(() => {
       `);
       });
     });
+*/
 
 });
