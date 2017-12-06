@@ -13,7 +13,7 @@ const SDK = {
 
         let token = {
             "authorization": localStorage.getItem("token")
-        }
+        };
 
 
         $.ajax({
@@ -22,9 +22,9 @@ const SDK = {
             headers: token,
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify(options.data),
+            data: JSON.stringify(SDK.Encryption.encrypt(JSON.stringify(options.data))),
             success: (data, status, xhr) => {
-                cb(null, data, status, xhr);
+                cb(null, SDK.Encryption.decrypt(data), status, xhr);
             },
             error: (xhr, status, errorThrown) => {
                 cb({xhr: xhr, status: status, error: errorThrown});
@@ -310,5 +310,37 @@ const SDK = {
         remove: (key) => {
             window.localStorage.removeItem(SDK.Storage.prefix + key);
         }
-    }
+    },
+
+    Encryption: {
+        encrypt: (encrypt) => {
+            if (encrypt !== undefined && encrypt.length !== 0) {
+                const fields = ['J', 'M', 'F'];
+                let encrypted = '';
+                for (let i = 0;  i < encrypt.length; i++) {
+                    encrypted += (String.fromCharCode((encrypt.charAt(i)).charCodeAt(0) ^ (fields[i % fields.length]).charCodeAt(0)))
+                }
+                return encrypted;
+            } else {
+                return encrypt;
+            }
+        },
+        decrypt: (decrypt) => {
+            if (decrypt.length > 0 && decrypt !== undefined) {
+                const fields = ['J', 'M', 'F'];
+                let decrypted = '';
+                for (let i = 0; i < decrypt.length; i++) {
+                    decrypted += (String.fromCharCode((decrypt.charAt(i)).charCodeAt(0) ^ (fields[i % fields.length]).charCodeAt(0)))
+                }
+                return decrypted;
+            } else {
+                return decrypt;
+            }
+        }
+    },
+
+
+
+
+
 };
