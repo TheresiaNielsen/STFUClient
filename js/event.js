@@ -74,7 +74,6 @@ $(document).ready(() => {
 
         $("#AllAttendingStudents-button").modal("toggle");
 
-        //console.log(idEvent);
 
         SDK.Event.findAttendingStudents(idEvent, (cb, students) => {
             console.log(students);
@@ -113,20 +112,6 @@ $("#AllAttendingStudents-button").modal("toggle");
         $("#all-attending-students").html("");
     });
 
-    /*$("#attend-modal").on("shown.es.modal", () => {
-      const egneEvents = SDK.Storage.load("egneEvents");
-      const $modalTbody = $("#modal-tbody");
-      egneEvents.forEach((entry) => {
-          $modalTbody.append(`
-        <tr>
-            <td>${entry.event.eventName}</td>
-            <td>${entry.count}</td>
-            <td>kr. ${entry.event.price}</td>
-            <td>kr. 0</td>
-        </tr>
-      `);
-      });
-    });
-*/
+
 
 });
