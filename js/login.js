@@ -1,6 +1,6 @@
 $(document).ready(() => {
 
-    SDK.User.loadNav();
+   // SDK.User.loadNav();
 
     $("#login-button").click(() => {
 
@@ -8,6 +8,9 @@ $(document).ready(() => {
         const password = $("#inputPassword").val();
 
         SDK.User.login(email, password, (err, data) => {
+            console.log(data);
+
+
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error");
             }
@@ -15,6 +18,7 @@ $(document).ready(() => {
                 console.log("Bad stuff happened")
             } else {
                 window.location.href = "index.html";
+
             }
         });
 

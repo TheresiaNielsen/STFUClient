@@ -141,7 +141,7 @@ const SDK = {
         },
 
         updateMyEvent: (idEvent, eventName, eventDate, location, description, price, cb) => {
-            SDK.request ({
+            SDK.request({
                 data: {
                     idEvent: idEvent,
                     eventName: eventName,
@@ -162,7 +162,6 @@ const SDK = {
             }, cb);
         }
     },
-
 
 
     /*Order: {
@@ -189,7 +188,7 @@ const SDK = {
             SDK.request({method: "GET", url: "/staffs"}, cb);
         },
         current: (cb) => {
-            SDK.request({
+           SDK.request({
                     url: "/students/profile",
                     method: "GET"
                 }, (err, data) => {
@@ -201,15 +200,14 @@ const SDK = {
 
                     cb(null, data);
 
-                }
-            )
+                });
         },
         logOut: () => {
             //SDK.Storage.remove("tokenId"); slet?
             //SDK.Storage.remove("userId"); slet?
             //SDK.Storage.remove("user"); slet?
             localStorage.removeItem("token"); // token slettes når man logger ud
-            window.location.href = "index.html";
+            window.location.href = "login.html";
         },
         login: (email, password, cb) => {
             SDK.request({
@@ -224,8 +222,8 @@ const SDK = {
                 //On login-error
                 if (err) return cb(err);
 
-
-                localStorage.setItem("token", data);
+                //data = data.replace(/[^a-zA-Z ]/g, "");
+                localStorage.setItem("token",JSON.parse(data));
                 //SDK.Storage.persist("crypted", data);
                 //SDK.Storage.persist("userId", data.userId);
                 //SDK.Storage.persist("user", data.user);
@@ -272,7 +270,7 @@ const SDK = {
 
         loadNav: (cb) => {
             $("#nav-container").load("nav.html", () => {
-                let currentUser = null;
+                var currentUser = null;
                 SDK.User.current((error, data) => {
                     currentUser = data;
 
@@ -287,14 +285,14 @@ const SDK = {
                     }
                     $("#logout-link").click(() => SDK.User.logOut());
 
-                })
+                });
 
                 cb && cb();
             });
         }
     },
     Storage: {
-        prefix: "BookStoreSDK",
+        prefix: "",
         persist: (key, value) => {
             window.localStorage.setItem(SDK.Storage.prefix + key, (typeof value === 'object') ? JSON.stringify(value) : value)
         },
@@ -317,7 +315,7 @@ const SDK = {
             if (encrypt !== undefined && encrypt.length !== 0) {
                 const fields = ['J', 'M', 'F'];
                 let encrypted = '';
-                for (let i = 0;  i < encrypt.length; i++) {
+                for (let i = 0; i < encrypt.length; i++) {
                     encrypted += (String.fromCharCode((encrypt.charAt(i)).charCodeAt(0) ^ (fields[i % fields.length]).charCodeAt(0)))
                 }
                 return encrypted;
@@ -338,9 +336,4 @@ const SDK = {
             }
         }
     },
-
-
-
-
-
 };

@@ -1,6 +1,6 @@
 $(document).ready(() => {
 
-    SDK.User.loadNav();
+    //SDK.User.loadNav();
 
     $("#create-button").click(() => {
 
@@ -20,10 +20,14 @@ $(document).ready(() => {
                 console.log("Bad stuff happened")
             } else {
                 console.log('test', data);
-                window.location.href = "index.html";
+                window.location.href = "login.html";
             }
         });
 
+    });
+
+    $("#ReturnToLogin-button").click (() => {
+        window.location.href = "login.html";
     });
 
 

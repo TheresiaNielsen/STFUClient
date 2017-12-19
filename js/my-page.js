@@ -13,7 +13,7 @@ $(document).ready(() => {
           <h1>Hi, ${currentStudent.firstName}</h1>
           <h1>Your lastname: ${currentStudent.lastName}</h1>
           <h1>Your email: ${currentStudent.email}</h1>
-          `)
+          `);
 
       SDK.Event.findAll((cb, events) => {
           events = JSON.parse(events);
