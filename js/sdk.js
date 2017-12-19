@@ -2,14 +2,7 @@ const SDK = {
     serverURL: "http://localhost:8080/api",
     request: (options, cb) => {
 
-        /* let headers = {};
-         if (options.headers) {
-           Object.keys(options.headers).forEach((h) => {
-             headers[h] = (typeof options.headers[h] === 'object') ? JSON.stringify(options.headers[h]) : options.headers[h];
-           });
-         }
-         Slet???
-         */
+
 
         let token = {
             "authorization": localStorage.getItem("token")
@@ -34,37 +27,7 @@ const SDK = {
     },
     Event: {
 
-        /*addToAttendingEvents: (event) => {
 
-            SDK.request({
-                method: "POST",
-                url: "/events/join"
-            });
-
-          let egneEvents = SDK.Storage.load("egneEvents");
-
-          //Has anything been added to egne events before?
-          if (!egneEvents) {
-            return SDK.Storage.persist("egneEvents", [{
-              count: 1,
-              event: event
-            }]);
-          }
-
-          //Does the event already exist?
-          let foundEvent = egneEvents.find(e => e.event.id === event.id);
-          if (foundEvent) {
-            let i = egneEvents.indexOf(foundEvent);
-            egneEvents[i].count++;
-          } else {
-            egneEvents.push({
-              count: 1,
-              event: event
-            });
-          }
-
-          SDK.Storage.persist("egneEvents", event);
-        },*/
 
         findAll: (cb, event) => {
             SDK.request({
@@ -97,8 +60,6 @@ const SDK = {
 
                 cb(null, data);
 
-                //headers: {authorization: SDK.Storage.load("tokenId")}
-                //cb);
 
             });
 
@@ -164,25 +125,7 @@ const SDK = {
     },
 
 
-    /*Order: {
-        create: (data, cb) => {
-            SDK.request({
-                method: "POST",
-                url: "/orders",
-                data: data,
-                headers: {authorization: SDK.Storage.load("tokenId")}
-            }, cb);
-        },
-        findMine: (cb) => {
-            SDK.request({
-                method: "GET",
-                //url: "/orders/" + SDK.User.current().id + "/allorders",
-                headers: {
-                    authorization: SDK.Storage.load("tokenId")
-                }
-            }, cb);
-        }
-    },*/
+
     User: {
         findAll: (cb) => {
             SDK.request({method: "GET", url: "/staffs"}, cb);
@@ -203,9 +146,7 @@ const SDK = {
                 });
         },
         logOut: () => {
-            //SDK.Storage.remove("tokenId"); slet?
-            //SDK.Storage.remove("userId"); slet?
-            //SDK.Storage.remove("user"); slet?
+
             localStorage.removeItem("token"); // token slettes når man logger ud
             window.location.href = "login.html";
         },
@@ -224,9 +165,6 @@ const SDK = {
 
                 //data = data.replace(/[^a-zA-Z ]/g, "");
                 localStorage.setItem("token",JSON.parse(data));
-                //SDK.Storage.persist("crypted", data);
-                //SDK.Storage.persist("userId", data.userId);
-                //SDK.Storage.persist("user", data.user);
 
                 cb(null, data);
 
@@ -248,7 +186,6 @@ const SDK = {
                 //On create-error
                 if (err) return cb(err);
 
-                //SDK.Storage.persist("crypted", data);
 
                 cb(null, data);
 
