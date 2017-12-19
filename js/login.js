@@ -1,6 +1,5 @@
 $(document).ready(() => {
 
-   // SDK.User.loadNav();
 
     $("#login-button").click(() => {
 
