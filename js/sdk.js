@@ -9,6 +9,7 @@ const SDK = {
         };
 
 
+        // AJAX (Asynchronous JavaScript and XML)
         $.ajax({
             url: SDK.serverURL + options.url,
             method: options.method,
@@ -28,7 +29,7 @@ const SDK = {
     Event: {
 
 
-
+        // Finding all the events
         findAll: (cb, event) => {
             SDK.request({
                 method: "GET",
@@ -41,6 +42,7 @@ const SDK = {
             }, cb);
         },
 
+        // The current user can create a new event. Passes data to the server
         createEvent: (eventName, location, price, eventDate, description, cb) => {
             SDK.request({
                 data: {
@@ -65,6 +67,7 @@ const SDK = {
 
         },
 
+        // The current user can attend an event. Passes data to the server
         attendEvent: (idEvent, eventName, eventDate, location, description, price, cb) => {
             SDK.request({
                 data: {
@@ -85,6 +88,7 @@ const SDK = {
             });
         },
 
+        // The current user can delete own event. Passes data to the server
         deleteMyEvent: (idEvent, eventName, eventDate, location, description, price, cb) => {
             SDK.request({
                 data: {
@@ -101,6 +105,7 @@ const SDK = {
             }, cb);
         },
 
+        // The current user can update own event. Passes data to the server
         updateMyEvent: (idEvent, eventName, eventDate, location, description, price, cb) => {
             SDK.request({
                 data: {
@@ -116,6 +121,7 @@ const SDK = {
             }, cb);
         },
 
+        // Finding the attending students for an specific event.
         findAttendingStudents: (idEvent, cb) => {
             SDK.request({
                 method: "GET",
@@ -130,6 +136,8 @@ const SDK = {
         findAll: (cb) => {
             SDK.request({method: "GET", url: "/staffs"}, cb);
         },
+
+        // Finding the current user. Passes to localStorage
         current: (cb) => {
            SDK.request({
                     url: "/students/profile",
@@ -145,11 +153,15 @@ const SDK = {
 
                 });
         },
+
+        // Logout for the current user
         logOut: () => {
 
             localStorage.removeItem("token"); // token slettes når man logger ud
             window.location.href = "login.html";
         },
+
+        // login for the current user. Passes email and password to the server
         login: (email, password, cb) => {
             SDK.request({
                 data: {
@@ -163,13 +175,15 @@ const SDK = {
                 //On login-error
                 if (err) return cb(err);
 
-                //data = data.replace(/[^a-zA-Z ]/g, "");
+                // Gets current users token and store it in localStorage
                 localStorage.setItem("token",JSON.parse(data));
 
                 cb(null, data);
 
             });
         },
+
+        // A student can create a user. Passes data to server
         createUser: (firstname, lastname, email, password, verify, cb) => {
             SDK.request({
                 data: {
@@ -183,7 +197,6 @@ const SDK = {
                 method: "POST"
             }, (err, data) => {
 
-                //On create-error
                 if (err) return cb(err);
 
 
@@ -192,9 +205,11 @@ const SDK = {
             });
         },
 
+        // Finding the attending events for the current user
         findAttendingEvents: (cb, events) => {
             SDK.request({
                 method: "GET",
+                // gets the current users ID from localStorage
                 url: "/students/" + localStorage.getItem("idStudent") + "/events",
                 headers: {
                     filter: {
@@ -205,6 +220,7 @@ const SDK = {
 
         },
 
+        // Load navigation-bar and controls whether to show the login or logout in the right corner
         loadNav: (cb) => {
             $("#nav-container").load("nav.html", () => {
                 var currentUser = null;
@@ -228,6 +244,8 @@ const SDK = {
             });
         }
     },
+
+    // Storage-method that makes it possible to store in localStorage
     Storage: {
         prefix: "",
         persist: (key, value) => {
@@ -248,6 +266,8 @@ const SDK = {
     },
 
     Encryption: {
+
+        // encrypt the values sent from client to server
         encrypt: (encrypt) => {
             if (encrypt !== undefined && encrypt.length !== 0) {
                 const fields = ['J', 'M', 'F'];
@@ -260,6 +280,8 @@ const SDK = {
                 return encrypt;
             }
         },
+
+        // decrypt the methods received from the server
         decrypt: (decrypt) => {
             if (decrypt.length > 0 && decrypt !== undefined) {
                 const fields = ['J', 'M', 'F'];
