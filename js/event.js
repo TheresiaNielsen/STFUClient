@@ -5,6 +5,7 @@ $(document).ready(() => {
     const $eventList = $("#event-list");
     const $AllAttendingStudents = $("#all-attending-students");
 
+  // Finding all the events and stores them
   SDK.Event.findAll ( (cb, events) => {
     events = JSON.parse(events);
     events.forEach((event) => {
@@ -45,8 +46,10 @@ $(document).ready(() => {
 
     });
 
+    // The "attend event" function
     $(".attendEvent-button").click(function() {
 
+        // The event ID is stored and send to the server
         const idEvent = $(this).data("event-id");
         const event = events.find((event) => event.idEvent === idEvent);
 
@@ -67,13 +70,13 @@ $(document).ready(() => {
 
     });
 
+    // Finding the attending students to a specific event when pressing the button
     $(".findAttendingStudents-button").click(function() {
 
 
         var idEvent = $(this).data("attend-event-id");
 
         $("#AllAttendingStudents-button").modal("toggle");
-
 
         SDK.Event.findAttendingStudents(idEvent, (cb, students) => {
             console.log(students);

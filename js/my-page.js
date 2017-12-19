@@ -9,12 +9,14 @@ $(document).ready(() => {
 
     var currentStudent =JSON.parse(res);
 
+    // The current users information is printed
     currentID = $("#Welcome").html(`
           <h1>Hi, ${currentStudent.firstName}</h1>
           <h1>Your lastname: ${currentStudent.lastName}</h1>
           <h1>Your email: ${currentStudent.email}</h1>
           `);
 
+    // Finding the events that belongs to the current user
       SDK.Event.findAll((cb, events) => {
           events = JSON.parse(events);
           events.forEach((event) => {
@@ -33,6 +35,8 @@ $(document).ready(() => {
             }
             
           });
+
+          // Delete event function
           $(".deleteMyEvent-button").click(function() {
 
               const idEvent = $(this).data("delete-my-event-id");
@@ -40,6 +44,7 @@ $(document).ready(() => {
 
               console.log(event);
 
+              // Pass the information about the deleted event
               SDK.Event.deleteMyEvent(idEvent, event.eventName, event.eventDate, event.location, event.description, event.price, (err, data) => {
                   if (err && err.xhr.status === 401) {
                       $(".form-group").addClass("has-error")
@@ -55,6 +60,7 @@ $(document).ready(() => {
 
           });
 
+          // The method, "update event" runs when pressing the button
           $(".updateMyEvent-button").click(function () {
 
               const idEvent = $(this).data("update-my-event-id");
@@ -70,6 +76,7 @@ $(document).ready(() => {
 
                   console.log(eventName);
 
+                  // Pass the updated information about the event
                   SDK.Event.updateMyEvent(idEvent, eventName, eventDate, location, description, price, (err, data) => {
 
                           window.location.href = "my-page.html";
@@ -81,6 +88,7 @@ $(document).ready(() => {
 
       });
 
+      // Finding the attending events to the current user
       SDK.User.findAttendingEvents ((cb, events) => {
         events = JSON.parse(events);
         events.forEach((event) => {

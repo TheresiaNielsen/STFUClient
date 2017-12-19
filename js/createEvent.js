@@ -2,6 +2,8 @@ $(document).ready(() => {
 
     SDK.User.loadNav();
 
+    //The method, "create event" runs when pressing the button
+
     $("#create-event-button").click(() => {
 
         const eventName = $("#inputEventNameCreate").val();

@@ -1,11 +1,15 @@
 $(document).ready(() => {
 
 
+    // The method, "login" runs when pressing the button
+
     $("#login-button").click(() => {
 
+        // gets the inputs
         const email = $("#inputEmail").val();
         const password = $("#inputPassword").val();
 
+        // pass the inputs
         SDK.User.login(email, password, (err, data) => {
             console.log(data);
 
@@ -24,6 +28,7 @@ $(document).ready(() => {
 
     });
 
+    // Forwarded to "create user" when pressing the button
     $("#GOTOcreate-button").click(() => {
         window.location.href = "createuser.html";
 
